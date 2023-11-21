@@ -1,0 +1,1 @@
+docker run --runtime=nvidia -it --shm-size=8g --ulimit memlock=-1 --ulimit stack=67108864 --rm --ipc=host -v ${PWD}:/workspace/lora,${MODEL}:/model lora /bin/bash
