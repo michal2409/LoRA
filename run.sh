@@ -2,11 +2,11 @@
 set -x
 
 NEMO="./NeMo"
-MAX_SEQ_LEN=4096
+MAX_SEQ_LEN=8192
 MAX_ITERS=5000
 MBS=1
 TP=1
-PP=1
+PP=8
 NUM_DEVICES=8
 
 MODEL=./model/lama-2-70b.nemo
@@ -25,6 +25,7 @@ torchrun --nproc_per_node=${NUM_DEVICES} ${NEMO}/examples/nlp/language_modeling/
         ++trainer.limit_val_batches=50 \
         model.megatron_amp_O2=False \
         ++model.mcore_gpt=True \
+        +model.recompute_activations=True \
         exp_manager.exp_dir="${EXP_DIR}" \
         model.tensor_model_parallel_size=${TP} \
         model.pipeline_model_parallel_size=${PP} \
